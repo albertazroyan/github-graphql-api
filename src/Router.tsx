@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
-import { NotFound, Main, Repository } from "./pages";
+const Main = lazy(() => import("./pages/Main"));
+const Repository = lazy(() => import("./pages/Repository"));
+const NotFound = lazy(() => import("./components/NotFound"));
 
 const router = createBrowserRouter([
   {
@@ -8,7 +11,7 @@ const router = createBrowserRouter([
     element: <Main />,
   },
   {
-    path: "/:id",
+    path: "/:owner/:name",
     element: <Repository />,
   },
   {
@@ -18,7 +21,11 @@ const router = createBrowserRouter([
 ]);
 
 const Router = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 };
 
 export default Router;

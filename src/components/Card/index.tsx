@@ -5,25 +5,25 @@ import "./styles.scss";
 
 interface IProps {
   title: string;
+  name: string;
   stars: number;
   lastCommit: Date;
   url: string;
-  id: number;
 }
 
-const Card = ({ title, stars, lastCommit, url, id }: IProps) => {
+const Card = ({ title, name, stars, lastCommit, url }: IProps) => {
   const navigate = useNavigate();
 
   const starsArr = useMemo(() => {
     return Array.from({ length: stars }, (_, i) => i + 1);
-  }, [stars])
+  }, [stars]);
 
   return (
-    <div className="card" onClick={() => navigate(`/${id}`)}>
+    <div className="card" onClick={() => navigate(`/${name}/${title}`)}>
       <div>
         <h2>{title}</h2>
-        {starsArr.length <=5 ? starsArr.map(itm => <img key={itm} src={Star} alt="Star" />) : <p>{stars}</p>}
-        <p>{new Date(lastCommit).toLocaleString()}</p>
+        {starsArr.length <=5 ? starsArr.map(itm => <img key={itm} src={Star} alt="Star" />) : <p>Stars: {stars}</p>}
+        <p>Last commit date: {new Date(lastCommit).toLocaleString()}</p>
         <p>{url}</p>
       </div>
     </div>
